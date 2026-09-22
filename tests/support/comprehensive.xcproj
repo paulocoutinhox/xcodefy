@@ -1,0 +1,165 @@
+{
+  "id": "PROJECT",
+  "organization": "example.com",
+  "class-prefix": "EX",
+  "default-configuration": "Debug",
+  "configurations": [
+    "Debug",
+    "Release",
+  ],
+  "localizations": {
+    "development": "en",
+    "supported": [
+      "fr",
+      "pt-BR",
+    ],
+  },
+  "imported-products": [
+    {
+      "name": "MyFramework.framework",
+      "project": "../Sources/Foo.swift",
+      "target": "MyFramework",
+      "product-id": "0123456789ABCDEF",
+      "type": "sourcecode.swift",
+      "target-membership": [
+        { "id": "0123456789ABCDEF", "build-phase": "App/script/Install man pages", "platforms": [ "ios" ], "header-role": "public", "mach-interface-generation": "both", "is-weak": true, "code-sign-on-copy": true, "code-generation": "skip", "header-preservation": "remove-on-copy", "decompress": true, "code-generation-visibility": "public", "arguments": "--go-fast", "asset-tags": [ "release-asset" ] },
+      ],
+    },
+  ],
+  "packages": [
+    {
+      "kind": "remote",
+      "repository": "https://github.com/example/Package.git",
+      "version": {
+        "up-to-next-major-version": "1.4",
+      },
+    }, {
+      "kind": "local",
+      "path": "",
+    },
+  ],
+  "files": [
+    {
+      "kind": "group",
+      "path": "App",
+      "children": [
+        { "path": "App.swift", "encoding": "utf8", "line-ending": "line-feed", "index": true, "target-membership": [ "App/compile-sources" ] },
+      ],
+    }, {
+      "kind": "folder",
+      "path": "Sources",
+      "target-membership": [
+        "App",
+      ],
+      "membership-exceptions": [
+        {
+          "target": "App",
+          "public-headers": [
+            "Public.h",
+          ],
+          "exclusions": [
+            "Legacy.swift",
+          ],
+        }, {
+          "build-phase": "App/copy/Install",
+        },
+      ],
+    }, {
+      "kind": "variant-group",
+      "path": "Main.strings",
+      "children": [
+        {
+          "path": "en.lproj/Main.strings",
+        },
+      ],
+    }, {
+      "kind": "version-group",
+      "path": "Model.xcdatamodeld",
+      "current-version": "Model.xcdatamodel",
+      "type": "wrapper.xcdatamodel",
+      "children": [
+        {
+          "path": "Model.xcdatamodeld/Model.xcdatamodel",
+        },
+      ],
+    },
+  ],
+  "targets": [
+    {
+      "name": "App",
+      "id": "APP",
+      "product-type": "application",
+      "specialized-configurations": [
+        { "name": "Debug", "file": { "anchor": "Config", "relative-path": "Debug.xcconfig" } },
+      ],
+      "dependencies": [
+        "Helper",
+      ],
+      "build-phases": [
+        "compile-sources",
+        "frameworks",
+        {
+          "kind": "copy",
+          "name": "Install",
+          "bundle-base-path": "resources-directory",
+          "relative-path": "Assets",
+          "scope": "install",
+        }, {
+          "kind": "script",
+          "name": "Lint",
+          "input-paths": [
+            "$(SRCROOT)/.swiftlint.yml",
+          ],
+          "shell": "/bin/sh",
+          "script": [
+            "swiftlint",
+            "exit 0",
+          ],
+        },
+      ],
+      "build-rules": [
+        {
+          "name": "Recompress",
+          "processor": "com.apple.compilers.proxy.script",
+          "file-type": "image.png",
+          "output-files": [
+            "$(DERIVED_FILE_DIR)/$(INPUT_FILE_BASE).png",
+          ],
+          "script": "echo recompress",
+        },
+      ],
+      "package-product-members": [
+        {
+          "package": "SuperUseful",
+          "id": "0123456789ABCDEF",
+          "product-name": "helper",
+          "product-type": "build-tool-plugin",
+          "build-phase": { "id": "0123456789ABCDEF", "build-phase": "copy/Install man pages", "platforms": [ "ios" ], "header-role": "public", "mach-interface-generation": "both", "is-weak": true, "code-sign-on-copy": true, "code-generation": "skip", "header-preservation": "remove-on-copy", "decompress": true, "code-generation-visibility": "public", "arguments": "--go-fast", "asset-tags": [ "release-asset" ] },
+        },
+      ],
+      "build-settings": {
+        "OTHER_SWIFT_FLAGS": [
+          "-warnings-as-errors",
+        ],
+        "PRODUCT_NAME": "App",
+      },
+    }, {
+      "name": "Helper",
+      "id": "HELP",
+      "kind": "aggregate",
+    }, {
+      "name": "Docs",
+      "id": "DOCS",
+      "kind": "external-build-system",
+      "build-tool-path": "/usr/bin/make",
+      "build-tool-arguments": "docs",
+      "build-tool-working-directory": "$(SRCROOT)",
+      "pass-build-settings-in-environment": false,
+    },
+  ],
+  "build-settings": {
+    "SDKROOT": "iphoneos",
+  },
+  "products-group": null,
+  "last-upgrade": "27.0",
+}
