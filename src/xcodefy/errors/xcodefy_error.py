@@ -1,0 +1,2 @@
+class XcodefyError(Exception):
+    pass
