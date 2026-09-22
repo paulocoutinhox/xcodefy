@@ -41,7 +41,7 @@ jobs:
 
       - name: upload-coverage
         if: matrix.os == 'ubuntu-latest' && matrix.python == '3.14'
-        uses: codecov/codecov-action@v5
+        uses: codecov/codecov-action@v7
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: paulocoutinhox/xcodefy
