@@ -217,15 +217,15 @@ Makefile is the only thing that writes it:
 
 ```bash
 make version                    # show the current version
-make set-version VERSION=0.0.2  # set it
+make set-version VERSION=x.y.z  # set it
 make bump PART=patch            # or raise major, minor or patch
 ```
 
 Commit the change, then push the matching tag:
 
 ```bash
-git tag v0.0.2
-git push origin v0.0.2
+git tag vX.Y.Z
+git push origin vX.Y.Z
 ```
 
 The release workflow runs lint and the full 100% coverage suite, verifies that the tag matches the declared package version, builds the wheel and source distribution with `uv`, validates both distributions with Twine, publishes to PyPI through Trusted Publishing, and creates the GitHub release.
